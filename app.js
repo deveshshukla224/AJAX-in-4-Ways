@@ -20,9 +20,9 @@ xhr_btn.addEventListener("click",function () {
 fetch_btn.addEventListener("click",function () {
     fetch(url)
         .then(function(req){
-            console.log(req);
+            (req);
             req.json().then(function(data){
-                console.log(data);
+                (data);
                 quote.innerText = data[0];
             })
         })
@@ -35,7 +35,6 @@ fetch_btn.addEventListener("click",function () {
 $('#jquery').click(function(){
     $.getJSON(url)
         .done(function(data){
-            console.log(data);
             $('#quote').text(data[0]);
         });
 });
@@ -44,7 +43,6 @@ $('#jquery').click(function(){
 axios_btn.addEventListener("click",function(){
     axios.get(url)
         .then(function(res){
-            console.log(res);
             quote.innerText = res.data[0];
         })
         .catch(function(){
