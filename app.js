@@ -1,9 +1,53 @@
-$("#btn").click(function(){
-    $.getJSON("http://aws.random.cat/meow")
+var xhr_btn = document.querySelector("#xhr");
+var fetch_btn = document.querySelector("#fetch");
+var jquery_btn = document.querySelector("#jquery");
+var axios_btn = document.querySelector("#axios");
+var quote = document.querySelector("#quote");
+var url = "https://ron-swanson-quotes.herokuapp.com/v2/quotes";
+
+xhr_btn.addEventListener("click",function () {
+    var xhr_req = new XMLHttpRequest();
+    xhr_req.onreadystatechange = function () {
+        if (xhr_req.readyState == 4 && xhr_req.status == 200) {
+            quote.innerHTML = JSON.parse(xhr_req.responseText)[0];
+        }
+    }
+    xhr_req.open("GET",url);
+    xhr_req.send();
+});
+
+
+fetch_btn.addEventListener("click",function () {
+    fetch(url)
+        .then(function(req){
+            console.log(req);
+            req.json().then(function(data){
+                console.log(data);
+                quote.innerText = data[0];
+            })
+        })
+        .catch(function(){
+            alert("ERROR!")
+        })
+});
+
+
+$('#jquery').click(function(){
+    $.getJSON(url)
         .done(function(data){
-            $('#catImg').attr("src", data.file);
+            console.log(data);
+            $('#quote').text(data[0]);
+        });
+});
+
+
+axios_btn.addEventListener("click",function(){
+    axios.get(url)
+        .then(function(res){
+            console.log(res);
+            quote.innerText = res.data[0];
         })
-        .fail(function(){
-            alert("REQUEST IS NOT POSSIBLE");
+        .catch(function(){
+            alert("ERROR!");
         })
-})
+});
